@@ -11,6 +11,9 @@ import CustomView from '../components/CustomView';
 import Header from '../components/Header';
 import {GetUser} from '../redux/system/selector';
 import {ScrollView} from 'react-native-gesture-handler';
+import CustomText from '../components/CustomText';
+import { fonts } from '../constants';
+import Dropdown from '../components/Dropdown';
 
 const ProfileScreen = () => {
   const dispatch = useDispatch();
@@ -23,6 +26,16 @@ const ProfileScreen = () => {
     dispatch(toggleLoader());
     dispatch(logoutUser());
     dispatch(hideLoader());
+  };
+
+  const infoBoxStyle = {
+    ...styles.infoBox,
+    backgroundColor: isDarkMode ? 'rgba(27,28,31, 0.9)' : 'rgb(255, 255, 255)',
+  };
+
+  const cellStyle = {
+    ...styles.cell,
+    borderBottomColor: isDarkMode ? 'white' : 'black',
   };
 
   return (
@@ -39,30 +52,44 @@ const ProfileScreen = () => {
             resizeMode="contain"
           />
         </View>
-        <View style={styles.textContainer}>
-          <Text style={[styles.text, {color: isDarkMode ? 'white' : 'black'}]}>
-            {loggedInUser.name}
-          </Text>
-        </View>
-        <View style={styles.textContainer}>
-          <Text style={[styles.text, {color: isDarkMode ? 'white' : 'black'}]}>
-            {loggedInUser.username}
-          </Text>
-        </View>
-        <View style={styles.textContainer}>
-          <Text style={[styles.text, {color: isDarkMode ? 'white' : 'black'}]}>
-            {loggedInUser.lastName}
-          </Text>
-        </View>
-        <View style={styles.textContainer}>
-          <Text style={[styles.text, {color: isDarkMode ? 'white' : 'black'}]}>
-            {loggedInUser.mail}
-          </Text>
-        </View>
+       
+          <View style={infoBoxStyle}>
+          <View style={styles.cell}>
+            <CustomText style={styles.titleText} text='Name :'/>
+            <CustomText style={styles.infoText} text={loggedInUser.name}/>
+          </View>
+          <View style={styles.cell}>
+            <CustomText style={styles.titleText} text='Last Name :'/>
+            <CustomText style={styles.infoText} text={loggedInUser.lastName}/>
+          </View>
+          <View style={styles.cell}>
+            <CustomText style={styles.titleText} text='Username :'/>
+            <CustomText style={styles.infoText} text={loggedInUser.username}/>
+          </View>
+          <View style={styles.cell}>
+            <CustomText style={styles.titleText} text='E-mail :'/>
+            <CustomText style={styles.infoText} text={loggedInUser.mail}/>
+          </View>
 
-        <View>
-          <Switch onValueChange={changeTheme} value={isDarkMode} />
-          <Text style={{color: isDarkMode ? 'white' : 'black'}}>Dark Mode</Text>
+        </View>
+        <View style={infoBoxStyle}>
+
+          <View style={styles.cell}>
+            <CustomText style={styles.titleText} text='Theme :'/>
+            <View style={styles.row}>
+            <Text style={{color: isDarkMode ? 'white' : 'black'}}>Dark Mode</Text>
+            <Switch onValueChange={changeTheme} value={isDarkMode} />
+            </View>
+          </View>
+          <View style={[styles.cell,{borderBottomWidth:0}]}>
+            <CustomText style={styles.titleText} text='Language :'/>
+            <View style={{marginTop:10}}/>
+            <Dropdown items={[
+              {label: 'Turkish', value: 'tr'},
+              {label: 'English', value: 'en'},
+            ]}
+            placeholder="Set language"/>
+          </View>
         </View>
         <Button onPress={Logout} title="Log out" />
       </ScrollView>
@@ -71,8 +98,9 @@ const ProfileScreen = () => {
 };
 export default ProfileScreen;
 const styles = StyleSheet.create({
-  textContainer: {
-    marginVertical: 10,
+  row:{
+    flexDirection:'row',
+    justifyContent:'space-between'
   },
   scrollView: {
     paddingBottom: 20,
@@ -82,6 +110,24 @@ const styles = StyleSheet.create({
     width: 100,
     height: 100,
     borderRadius: 50,
+  },
+  infoBox: {
+    marginTop:25,
+    borderRadius : 10
+  },
+  cell: {
+    marginVertical: 10,
+    marginHorizontal: 15,
+    borderBottomWidth: 0.5,
+    borderBottomColor: 'black',
+  },
+  infoText:{
+    marginBottom: 10,
+  },
+  titleText:{
+    fontSize: fonts.f12,
+    fontWeight: '400',
+    marginBottom: 5,
   },
   imageContainer: {
     justifyContent: 'center',

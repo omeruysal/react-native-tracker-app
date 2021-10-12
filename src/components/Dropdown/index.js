@@ -65,6 +65,7 @@ const styles = StyleSheet.create({
     borderColor: 'white',
     borderRadius: 10,
     padding: 10,
+    marginBottom: 10
   },
   title: {
     color: 'white',

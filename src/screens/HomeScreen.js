@@ -71,7 +71,7 @@ const HomeScreen = () => {
           multiline
         />
         <View style={styles.inputContainer}>
-          <Button onPress={() => saveProjectTimeline()} title={'Save  work'} />
+          <Button onPress={() => saveProjectTimeline()} title={'Save my work'} />
         </View>
       </View>
     </CustomView>
