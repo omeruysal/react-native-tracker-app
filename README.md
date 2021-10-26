@@ -1,4 +1,4 @@
 # react-native-tracker-app
 React Native with Redux. My first Rn app.
 
-![Login!](app-images/loginDark.png)
+![Login!](app-images/login-Dark.png)
